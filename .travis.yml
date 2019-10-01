@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+    - '10'  # EOL at 2021-04-01
+    - '12'  # EOL at 2022-04-01
+branches:
+    only:
+        - master
+
+script:
+    - 'npm run build'
+    - 'npm run coverage'
+    - 'npm run coveralls'
