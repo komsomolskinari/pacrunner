@@ -1,5 +1,5 @@
 module.exports = {
 	preset: 'ts-jest/presets/js-with-ts',
 	testRegex: '\\.test\\.ts$',
-	collectCoverageFrom: ['src/**/*.js', 'src/**/*.ts']
+	collectCoverageFrom: ['src/*.ts']
 };

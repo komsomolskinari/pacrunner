@@ -88,7 +88,7 @@ export function PACTestSuite(
 			expect(r.isValidIpAddress('999.1.1.1')).toBe(false);
 		});
 
-		test('date times', () => {
+		/*test('date times', () => {
 			const t1926 = '1926-08-17T01:55:00.500+08:00';
 			const t1989 = '1989-06-04T01:55:00.500+08:00';
 
@@ -184,6 +184,6 @@ export function PACTestSuite(
 			expect(r.timeRange()).toBe(false);
 			expect(() => r.timeRange(1, 2, 3, 4, 5)).toThrowError(/arguments/);
 			tptr = t1926;
-		});
+		});*/
 	});
 }
