@@ -1,0 +1,5 @@
+setThisContext;
+
+function FindProxyForURL() {
+	return '';
+}

@@ -1,0 +1,3 @@
+function FindProxyForURL() {
+	return ctx;
+}
