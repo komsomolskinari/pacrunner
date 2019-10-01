@@ -1,7 +1,7 @@
 module.exports = {
 	preset: 'ts-jest/presets/js-with-ts',
 
-	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
 
 	//testEnvironment: 'node',

@@ -236,6 +236,12 @@ function timeRange() {
 		: date2 >= date || date >= date1;
 }
 
+// emulated native function
+
+function dnsResolve(addr) {
+	return addr[0] === '$' ? null : '173.245.48.1'; // One of Cloudflare IP
+}
+
 // Export them
 module.exports = {
 	isPlainHostName,
@@ -244,7 +250,7 @@ module.exports = {
 	isResolvable,
 	isInNet,
 
-	dnsResolve: () => '173.245.48.1', // One of Cloudflare IP
+	dnsResolve,
 	convert_addr,
 	myIPAddress: () => '127.0.0.1', // As standard, always return localhost IP
 	dnsDomainLevels,

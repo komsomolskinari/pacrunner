@@ -11,16 +11,18 @@ type RawContext = {
 	[key: string]: any;
 };
 
-const pacMainExporter = exporterSig + ' = FindProxyForURL';
-
+const pacMainExporter = `
+// intergraded type check
+if (typeof FindProxyForURL !== 'function'){
+	throw new TypeError('FindProxyForURL is not function');
+}
+${exporterSig} = FindProxyForURL;
+`;
 let pacContext: RawContext = {};
-const defaultPACMain = (): never => {
-	throw new TypeError('Please set PAC content use InitPAC()');
-};
-pacContext[exporterSig] = defaultPACMain;
 let pacText = '';
 
 export enum RuntimeVersion {
+	_Error = -1,
 	None,
 	Firefox
 }
@@ -47,9 +49,6 @@ export function InitPAC(
 	pacText = content;
 	pacContext = context;
 	Object.assign(pacContext, selectRuntime(runtime));
-	if (typeof pacContext[exporterSig] !== 'function') {
-		pacContext[exporterSig] = defaultPACMain;
-	}
 }
 
 /**
@@ -74,6 +73,9 @@ export function RunPAC(url: string, context: RawContext = {}): string {
 	const ctx: RawContext = {};
 	Object.assign(ctx, pacContext);
 	Object.assign(ctx, context);
+	if (typeof ctx.FindProxyForURL !== 'undefined') {
+		throw new TypeError("Don't override FindProxyForURL in context");
+	}
 	createContext(ctx);
 	runInContext(pacText, ctx);
 	runInContext(pacMainExporter, ctx);
