@@ -1,4 +1,5 @@
 // Direct ported PAC runtime from Mozilla
+// See: https://dxr.mozilla.org/mozilla-central/source/netwerk/base/ProxyAutoConfig.cpp#45
 
 export function dnsDomainIs(host: string, domain: string): boolean {
 	return (

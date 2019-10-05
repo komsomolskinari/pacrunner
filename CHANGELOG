@@ -1,4 +1,10 @@
 # YAML format
+v0.3.1:
+  date: 2019-10-05
+  changed:
+    - firefox pac runtime now using ts version
+  removed:
+    - pure js runtime removed due to tsc can't generate .d.ts for it
 
 v0.3.0:
   date: 2019-10-05

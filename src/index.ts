@@ -1,7 +1,6 @@
 import { createContext, Script } from 'vm';
 import { readFileSync } from 'fs';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ffpac = require('./3rd/mozillaruntime');
+import * as ffpac from './3rd/mozillaTSruntime';
 
 // put an uuid
 const exporterSig = '_25b121fbbd4840fba525f9281e95007c';
