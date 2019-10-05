@@ -1,0 +1,21 @@
+# YAML format
+
+v0.3.0:
+  date: 2019-10-05
+  fixed:
+    - function signature error in PACruntime.d.ts
+    - npm version badge is for another pack......
+  changed:
+    - cache compiled PAC
+
+v0.2.1:
+  notice:
+    - not tagged
+  date: 2019-10-02
+  new:
+    - make it works
+    - use vm module to set PAC context
+    - full test for runner itself
+    - PAC runtime copy pasted from firefox
+    - some test and .d.ts for PAC runtime
+    - basic structure

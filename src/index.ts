@@ -20,7 +20,9 @@ ${exporterSig} = FindProxyForURL;
 `;
 let pacContext: RawContext = {};
 let compiledPac: Script;
-
+/**
+ * Select which version of PAC runtime will be used (not tested)
+ */
 export enum RuntimeVersion {
 	_Error = -1,
 	None,
@@ -70,6 +72,7 @@ export function InitPACFromFile(
  * @param context Specific context for this PAC run
  */
 export function RunPAC(url: string, context: RawContext = {}): string {
+	// Build context and run PAC
 	const ctx: RawContext = {};
 	Object.assign(ctx, pacContext);
 	Object.assign(ctx, context);
@@ -79,8 +82,11 @@ export function RunPAC(url: string, context: RawContext = {}): string {
 	createContext(ctx);
 	compiledPac.runInContext(ctx);
 
+	// Parse URL
 	const host = new URL(url).hostname;
+	// Call FindProxyForURL
 	const ret = ctx[exporterSig](url, host);
+	// Type check
 	const tret = typeof ret;
 	if (tret !== 'string') {
 		throw new TypeError(
