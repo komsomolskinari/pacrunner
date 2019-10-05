@@ -1,4 +1,4 @@
-import { createContext, runInContext } from 'vm';
+import { createContext, Script } from 'vm';
 import { readFileSync } from 'fs';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ffpac = require('./3rd/mozillaruntime');
@@ -19,7 +19,7 @@ if (typeof FindProxyForURL !== 'function'){
 ${exporterSig} = FindProxyForURL;
 `;
 let pacContext: RawContext = {};
-let pacText = '';
+let compiledPac: Script;
 
 export enum RuntimeVersion {
 	_Error = -1,
@@ -46,7 +46,7 @@ export function InitPAC(
 	context: RawContext = {},
 	runtime: RuntimeVersion = RuntimeVersion.None
 ): void {
-	pacText = content;
+	compiledPac = new Script(content + pacMainExporter);
 	pacContext = context;
 	Object.assign(pacContext, selectRuntime(runtime));
 }
@@ -77,8 +77,7 @@ export function RunPAC(url: string, context: RawContext = {}): string {
 		throw new TypeError("Don't override FindProxyForURL in context");
 	}
 	createContext(ctx);
-	runInContext(pacText, ctx);
-	runInContext(pacMainExporter, ctx);
+	compiledPac.runInContext(ctx);
 
 	const host = new URL(url).hostname;
 	const ret = ctx[exporterSig](url, host);
