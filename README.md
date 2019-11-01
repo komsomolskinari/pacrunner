@@ -7,6 +7,8 @@
 Run PAC file in specific context.
 
 ## Example
+[Demo project](https://github.com/komsomolskinari/pacrunner-demo/)
+
 Assume a PAC "template" file `template.pac`, some variable is replaced to real value on server side. (So it can't directly run in JS engine):
 
 ```js
