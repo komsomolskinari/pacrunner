@@ -17,8 +17,7 @@ if (typeof FindProxyForURL !== 'function'){
 }
 ${exporterSig} = FindProxyForURL;
 `;
-let pacContext: RawContext = {};
-let compiledPac: Script;
+
 /**
  * Select which version of PAC runtime will be used (not tested)
  */
@@ -34,68 +33,6 @@ rtVer[RuntimeVersion.Firefox] = ffpac;
 
 function selectRuntime(ver: RuntimeVersion): RawContext {
 	return rtVer[ver] === undefined ? {} : rtVer[ver];
-}
-/**
- * Select PAC content and specify default context
- * @param content Content of PAC
- * @param context Default context for PAC
- * @param runtime Runtime version
- */
-export function InitPAC(
-	content: string,
-	context: RawContext = {},
-	runtime: RuntimeVersion = RuntimeVersion.None
-): void {
-	if (typeof context.FindProxyForURL !== 'undefined') {
-		throw new TypeError("Don't override FindProxyForURL in context");
-	}
-	compiledPac = new Script(content + pacMainExporter);
-	pacContext = context;
-	Object.assign(pacContext, selectRuntime(runtime));
-	pacContext = createContext(pacContext);
-}
-
-/**
- * Select PAC file and specify default context
- * @param file Location or fd of PAC
- * @param context Default context for PAC
- */
-export function InitPACFromFile(
-	file: string | number,
-	context: RawContext = {}
-): void {
-	const str = readFileSync(file).toString();
-	InitPAC(str, context);
-}
-
-/**
- * Run PAC
- * @param url URL to be tested, host parameter is not provided, it's basically part of URL
- * @param context Specific context for this PAC run
- */
-export function RunPAC(url: string, context: RawContext = {}): string {
-	// Build context and run PAC
-	//const ctx: RawContext = {};
-	const ctx = pacContext;
-	Object.assign(ctx, context);
-	if (typeof context.FindProxyForURL !== 'undefined') {
-		throw new TypeError("Don't override FindProxyForURL in context");
-	}
-	//createContext(ctx);
-	compiledPac.runInContext(ctx);
-
-	// Parse URL
-	const host = new URL(url).hostname;
-	// Call FindProxyForURL
-	const ret = ctx[exporterSig](url, host);
-	// Type check
-	const tret = typeof ret;
-	if (tret !== 'string') {
-		throw new TypeError(
-			`PAC should return string, ${ret}(${tret}) returned`
-		);
-	}
-	return ret;
 }
 
 export class PAC {
