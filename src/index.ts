@@ -109,6 +109,8 @@ export class PAC {
 		this.compiledPac = new Script(str + pacMainExporter);
 		this.pacContext = context;
 		Object.assign(this.pacContext, selectRuntime(runtime));
+		if (typeof this.pacContext['FindProxyForURL'] !== 'undefined')
+			throw new TypeError("Don't override FindProxyForURL in context");
 	}
 
 	static FromFile(

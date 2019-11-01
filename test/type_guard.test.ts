@@ -1,36 +1,34 @@
-import { InitPACFromFile, RunPAC, InitPAC, RuntimeVersion } from '../src/index';
+import { RuntimeVersion, PAC } from '../src/index';
+const site = 'http://yuzu-soft.com';
 
 describe('Type guard', () => {
 	test('Error when no entry', () => {
-		InitPAC('');
-		expect(() => RunPAC('http://yuzu-soft.com')).toThrowError(
-			/FindProxyForURL/
-		);
+		expect(() => new PAC('').Run(site)).toThrowError(/FindProxyForURL/);
 	});
 	test('Error when main is not fuction', () => {
-		InitPAC('var FindProxyForURL = 1;');
-		expect(() => RunPAC('http://yuzu-soft.com')).toThrowError(
-			/FindProxyForURL/
-		);
+		expect(() =>
+			new PAC('var FindProxyForURL = 1;').Run(site)
+		).toThrowError(/FindProxyForURL/);
 	});
 	test('Error when context has FindProxyForURL', () => {
 		expect(() => {
-			InitPAC('test/context_isolate_runpac.pac.js', {
+			new PAC('', {
 				FindProxyForURL: 1
 			});
-			RunPAC('http://yuzu-soft.com');
+		}).toThrowError(/override/);
+		expect(() => {
+			new PAC('').Run(site, {
+				FindProxyForURL: 1
+			});
 		}).toThrowError(/override/);
 	});
 	test('No error when unexpected runtime selected', () => {
-		expect(() => InitPAC('', {}, RuntimeVersion._Error)).not.toThrowError();
+		expect(() => new PAC('', {}, RuntimeVersion._Error)).not.toThrowError();
 	});
-	test('Error when PAC not init', () => {
-		expect(() => RunPAC('http://yuzu-soft.com')).toThrowError(
-			/FindProxyForURL/
-		);
-	});
+
 	test('Error when PAC return non string', () => {
-		InitPACFromFile('test/type_guard.pac.js');
-		expect(() => RunPAC('http://yuzu-soft.com')).toThrowError(/PAC/);
+		expect(() =>
+			PAC.FromFile('test/type_guard.pac.js').Run(site)
+		).toThrowError(/PAC/);
 	});
 });
