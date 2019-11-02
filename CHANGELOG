@@ -1,4 +1,12 @@
 # YAML format
+
+v0.4.0:
+  notice:
+    - it's a breaking-change, preparing for v1.0
+  date: 2019-11-02
+  changed:
+    - API changed into OOP style
+
 v0.3.1:
   date: 2019-10-05
   changed:

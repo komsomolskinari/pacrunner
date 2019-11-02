@@ -1,6 +1,6 @@
 {
   "name": "pacrunner",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "A simple util helps testing PAC file",
   "main": "dist/index.js",
   "scripts": {
@@ -23,17 +23,17 @@
   ],
   "license": "0BSD",
   "devDependencies": {
-    "@types/jest": "^24.0.18",
-    "@types/node": "^12.12.4",
-    "@typescript-eslint/eslint-plugin": "^2.3.2",
-    "@typescript-eslint/parser": "^2.3.2",
-    "coveralls": "^3.0.6",
-    "eslint": "^6.5.1",
-    "eslint-config-prettier": "^6.3.0",
+    "@types/jest": "^24.0.21",
+    "@types/node": "^12.12.5",
+    "@typescript-eslint/eslint-plugin": "^2.6.0",
+    "@typescript-eslint/parser": "^2.6.0",
+    "coveralls": "^3.0.7",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-prettier": "^3.1.1",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.4"
   }
 }

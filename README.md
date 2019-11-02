@@ -21,11 +21,10 @@ function FindProxyForURL(url, host) {
 ``` 
 
 ```js
-import { InitPACFromFile, RunPAC } from 'pacrunner';
+import { PAC } from 'pacrunner';
 
-InitPACFromFile('template.pac');
 console.log(
-	RunPAC('https://exhentai.org/img/kokomade.jpg', {
+	PAC.FromFile('template.pac').Run('https://exhentai.org/img/kokomade.jpg', {
 		_HOST: 'exhentai.org',
 		_PROXY: 'SOCKS 127.0.0.1:1080;'
 	})
